@@ -55,16 +55,25 @@ function unixConvert(unix) {
     // Event listener for search-button
     $("#search-button").on("click", function(event) {
         event.preventDefault();
-        //clock();
 
-        // localStorage: only the search query City/Country - display the City/Country
+        var name = $("#search-input-city").val().trim().toLowerCase();
+        console.log("search-input-city: " + name);
+        var country = $("#search-input-country").val().trim().toUpperCase();
+        console.log("search-input-country: " + country);
+
+
+// IF EMPTY 
+// return;
+
+        // =========== localStorage: only the search query City/Country - display the City/Country =========== 
+
         var name; //check case sensitive >>propercase & trim #search-input-city
         var country; //check case sensitive >>uppercase & trim #search-input-country
         // Build the query URL for the ajax request to the WeatherMap API
         //var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=London,UK&appid=26355e49dde4c9bc9cc138c533cbc5f2";
         var APIkey = "26355e49dde4c9bc9cc138c533cbc5f2"
-        var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=London,UK&cnt=6&appid=" + APIkey + "&units=imperial";
-        //var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + name + "," + country + "&cnt=6&appid=" + APIkey + "&units=imperial";
+        //var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=London,UK&cnt=6&appid=" + APIkey + "&units=imperial";
+        var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + name + "," + country + "&cnt=6&appid=" + APIkey + "&units=imperial";
 
         
 
@@ -80,7 +89,7 @@ function unixConvert(unix) {
             console.log("Hi");
             console.log(response);
 
-            // create weatherCards with a loop = 1 current + 5 future
+            // create weatherCards/button with a loop = 1 current + 5 future
             var unix = response.list[0].dt;
             console.log("unix: " + unix);
             unixConvert(unix); 

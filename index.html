@@ -17,7 +17,7 @@
 </head>
 
 <body>
-  <header class="container-fluid text-center text-white bg-dark p-2 weather-header">
+  <header class="container-fluid text-center text-white p-2 weather-header">
     <h1>Weather Dashboard</h1>
   </header>
 
@@ -35,11 +35,11 @@
               <input class="form-control" type="text" id="search-input-city" placeholder="London" aria-labelledby="form-heading" aria-controls="today forecast" />
           </div>
           <div class="form-group">
-              <input class="form-control text-danger" type="text" id="search-input-country" placeholder="UK" aria-labelledby="form-heading" aria-controls="today forecast" />
+              <input class="form-control" type="text" id="search-input-country" placeholder="UK" aria-labelledby="form-heading" aria-controls="today forecast" />
           </div>
 
           <div class="input-group-append">
-            <button type="submit" class="btn btn-lg btn-block search-button" id="search-button" aria-label="submit search">
+            <button type="submit" class="btn btn-lg btn-block btn-outline-light search-button" id="search-button" aria-label="submit search">
               Search
             </button>
             <hr class="hr weather-hr" />
@@ -47,9 +47,10 @@
         </form>
 
 
-        <div class="list-group" id="history">Search History
-          <button type="submit" class="btn btn-lg btn-block" id="search-button" aria-label="submit search">
-            New York
+        <div class="list-group" id="history">
+          <legend class="mt-4 h6 form-label">Search History:</legend>
+          <button type="submit" class="btn btn-lg btn-block btn-outline-light titlecase" id="search-button" aria-label="submit search">
+            new York
           </button>
         </div>
       </aside>

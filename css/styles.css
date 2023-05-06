@@ -8,22 +8,32 @@
 
 body {
   color:rgb(50, 104, 145);
-  font-family: 'Lato', sans-serif
+  font-family: 'Lato', sans-serif;
+  background-color:rgba(50, 104, 145, 0.1);
 }
 
- .container-fluid {
+.container-fluid {
   /* width: 800px; */
   margin-top: 20px;
   border: 1px solid red;
- } 
+} 
 
- form {
-  border: 1px solid red;
+.weather-header {
+  background-color:rgb(50, 104, 145);
  }
 
- .btn{
-  border: 1px solid gray;
- }
+
+form {
+  /* border: 1px solid red; */
+}
+
+/* input {
+  color:rgb(50, 104, 145);
+} */
+
+.btn{
+  /* border: 1px solid gray; */
+}
 
 /* Google Icons */
 .material-symbols-outlined {
@@ -33,13 +43,30 @@ body {
   'GRAD' 0,
   'opsz' 48
 }
+
 hr {
   background-color: green;
 }
+
 aside{
   border: 1px solid green;
 }
 
+#search-button {
+  background-color:rgba(50, 104, 145, 0.2);
+  color: white;
+}
+
+#history button {
+  background-color:rgba(50, 104, 145, 0.5);
+  color: white;
+}
+
+/* for cities not in ProperCase */
+.titlecase 
+{
+    text-transform: capitalize;
+}
 
 
 

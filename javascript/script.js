@@ -29,6 +29,8 @@ $(window).ready(function() { console.log("window ready"); //});
     // Event listener for search-button
     $("#search-button").on("click", function(event) {
         event.preventDefault();
+        // get Date
+        
         // localStorage: only the search query City/Country - display the City/Country
         var searchCity; //check case sensitive >>propercase & trim #search-input-city
         var searchCountry; //check case sensitive >>uppercase & trim #search-input-country

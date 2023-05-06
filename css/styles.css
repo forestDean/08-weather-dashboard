@@ -1,11 +1,14 @@
 :root {}
 
+@import url('https://fonts.googleapis.com/css2?family=Lato&family=Solway&display=fallback');
+
 * {
     box-sizing: border-box;
   }
 
 body {
   color:rgb(50, 104, 145);
+  font-family: 'Lato', sans-serif
 }
 
  .container-fluid {
@@ -13,9 +16,30 @@ body {
   margin-top: 20px;
   border: 1px solid red;
  } 
- .search-button{
+
+ form {
+  border: 1px solid red;
+ }
+
+ .btn{
   border: 1px solid gray;
  }
+
+/* Google Icons */
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 48
+}
+hr {
+  background-color: green;
+}
+aside{
+  border: 1px solid green;
+}
+
 
 
 

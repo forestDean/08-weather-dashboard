@@ -1,0 +1,63 @@
+:root {}
+
+* {
+    box-sizing: border-box;
+  }
+
+body {
+  color:rgb(50, 104, 145);
+}
+
+ .container-fluid {
+  /* width: 800px; */
+  margin-top: 20px;
+  border: 1px solid red;
+ } 
+ .search-button{
+  border: 1px solid gray;
+ }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ /* ================= RESPONSIVE MEDIA QUERIES ================= */
+
+/* Extra small devices (portrait phones, less than 576px)
+No media query since this is the default in Bootstrap */
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {
+
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) { 
+
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+
+} 
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+  
+}

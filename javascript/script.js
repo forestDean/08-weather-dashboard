@@ -112,13 +112,13 @@ function unixConvert(unix) {
             }
             console.log(response);
 
+            var city = response.city.name;
+            console.log("city: " + city);
+
             // create weatherCards/button with a loop = 1 current + 5 future
             var unix = response.list[0].dt;
             console.log("unix: " + unix);
-            unixConvert(unix); 
-
-            var city = response.city.name;
-            console.log("city: " + city);
+            unixConvert(unix); // returns unixDay/unixDate
             var icon = response.list[0].weather[0].icon;
             console.log("icon : " + icon );
             console.log("https://openweathermap.org/img/wn/" + icon + "@2x.png");

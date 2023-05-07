@@ -62,19 +62,20 @@ function unixConvert(unix) {
         console.log("search-input-country: " + country);
 
 
-// if empty
-// return;
-// if no search match
-// return "undefined" != typeof r && r.event.triggered !== b.type ? r.event.dispatch.apply(a, arguments) : void 0
 
         // =========== localStorage: only the search query City/Country - display the City/Country =========== 
+        // set max History
+        // add clear History
+        // default population: Bristol, UK
 
         var name; //check case sensitive >>propercase & trim #search-input-city
         var country; //check case sensitive >>uppercase & trim #search-input-country
         // Build the query URL for the ajax request to the WeatherMap API
         //var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=London,UK&appid=26355e49dde4c9bc9cc138c533cbc5f2";
         var APIkey = "26355e49dde4c9bc9cc138c533cbc5f2"
+        
         //var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=London,UK&cnt=6&appid=" + APIkey + "&units=imperial";
+        //var queryURL = "https://api.openweathermap.org/data/2.5/forecast/daily?q=" + name + "," + country + "&cnt=6&appid=" + APIkey + "&units=imperial";
         var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + name + "," + country + "&cnt=6&appid=" + APIkey + "&units=imperial";
 
         
@@ -85,25 +86,17 @@ function unixConvert(unix) {
           method: "GET",
           // if empty or no search match
           error: function() {
-            // something else went wrong
-            //alert('An unknown error occurred!');
+            // alert
             console.log("search not found");
             $('#searchalert').removeClass('d-none');
+            // delayed reset
             setTimeout(function() { 
             $('#searchalert').addClass('d-none');
             }, 3000);
           }
-          // statusCode: {
-          //   404: function() {
-          //        // server says: page not found; let's redirect to 404 page
-          //        console.log("search not found");
-          //        //window.location.href = "http://example.com/my/404/page";
-          //   }
-          // }
-  
         })
   
-        // After the data from the AJAX request comes back
+        // After the data from the AJAX request returns...
           .then(function(response) {
             
             console.log("Hi");
@@ -116,25 +109,29 @@ function unixConvert(unix) {
             console.log("city: " + city);
 
             // create weatherCards/button with a loop = 1 current + 5 future
-            var unix = response.list[0].dt;
+            var i = 0;
+            $(".card").each(function(){
+            console.log("i: " + i);
+            var unix = response.list[i].dt;
             console.log("unix: " + unix);
             unixConvert(unix); // returns unixDay/unixDate
-            var icon = response.list[0].weather[0].icon;
+            var icon = response.list[i].weather[0].icon;
             console.log("icon : " + icon );
             console.log("https://openweathermap.org/img/wn/" + icon + "@2x.png");
             // https://openweathermap.org/img/wn/10d@2x.png
-            var description = response.list[0].weather[0].description;
+            // switch with Google icons
+            var description = response.list[i].weather[0].description;
             console.log("description: " + description )
-            var temp = response.list[0].main.temp; // imperial: Fahrenheit (32°F − 32) × 5/9 = 0°C
+            var temp = response.list[i].main.temp; // imperial: Fahrenheit (32°F − 32) × 5/9 = 0°C
             temp = (temp-32)*(5/9);
             temp = temp.toFixed();
             console.log("temperature : " + temp + "°C"); 
-            var wind = response.list[0].wind.speed; // imperial: miles/hour
+            var wind = response.list[i].wind.speed; // imperial: miles/hour
             console.log("wind : " + wind + " miles/hour");
-            var humd = response.list[0].main.humidity; 
+            var humd = response.list[i].main.humidity; 
             console.log("humidity : " + humd + "%"); // units %
-
-
+            i++;
+           });
 
 
 

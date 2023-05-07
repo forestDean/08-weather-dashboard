@@ -37,44 +37,44 @@ $(window).ready(function() { console.log("window ready"); //});
 // };
 //var unixDay;
 //var unixDate;
-var unixHour;
-function unixConvert(unix) {
-  // console.log(typeof unix);
-  // console.log(jQuery.type(unix));
-  //var unixNew = new Date(unix * 1000);
-  // console.log("unixNew: " + typeof unixNew);
-  // console.log("unixNew: " + jQuery.type(unixNew))
-  // console.log("unixNew: " + unixNew);
-  // var unixNewHours = unixNew.getHours();
-  // console.log("unixNewHours: " + unixNewHours);
-  // console.log(typeof unixNewHours);
-  // console.log(jQuery.type(unixNewHours));
+// var unixHour;
+// function unixConvert(unix) {
+//   // console.log(typeof unix);
+//   // console.log(jQuery.type(unix));
+//   //var unixNew = new Date(unix * 1000);
+//   // console.log("unixNew: " + typeof unixNew);
+//   // console.log("unixNew: " + jQuery.type(unixNew))
+//   // console.log("unixNew: " + unixNew);
+//   // var unixNewHours = unixNew.getHours();
+//   // console.log("unixNewHours: " + unixNewHours);
+//   // console.log(typeof unixNewHours);
+//   // console.log(jQuery.type(unixNewHours));
 
-    //var unixTimestamp = 1683396000;
-    var date = new Date(unix * 1000);
-    var options1 = { weekday: 'long' };
-    var options2 = { year: 'numeric', month: 'long', day: 'numeric' };
-    //var options3 = { hour: 'numeric' };
+//     //var unixTimestamp = 1683396000;
+//     var date = new Date(unix * 1000);
+//     var options1 = { weekday: 'long' };
+//     var options2 = { year: 'numeric', month: 'long', day: 'numeric' };
+//     //var options3 = { hour: 'numeric' };
 
-    console.log(date);
-    //console.log(Date.now());
-    var unixDay = date.toLocaleDateString("en-GB",options1);
-    var unixDate = date.toLocaleDateString("en-GB",options2);
-    var unixHour = date.getHours();
-    console.log("unixHour: " + unixHour);
-    console.log("*********************1**" + typeof unixHour);
-    console.log("*********************1**" + jQuery.type(unixHour));
+//     console.log(date);
+//     //console.log(Date.now());
+//     var unixDay = date.toLocaleDateString("en-GB",options1);
+//     var unixDate = date.toLocaleDateString("en-GB",options2);
+//     var unixHour = date.getHours();
+//     console.log("unixHour: " + unixHour);
+//     console.log("*********************1**" + typeof unixHour);
+//     console.log("*********************1**" + jQuery.type(unixHour));
 
-    //var unixHour = new Date(unix * 1000);
-    //var unixHour = date.toLocaleTimeString("en-GB",options3);
-    //unixHour = parseInt(unixHour);
-    //unixHour = JSONparse(unixHour);
-    //unixHour = number(unixHour);
-    console.log(unixDay);   // Prints: Saturday
-    console.log(unixDate);   // Prints: 6 May 2023
-    console.log("unixHour: " + unixHour);
-    //return unixHour;
-}
+//     //var unixHour = new Date(unix * 1000);
+//     //var unixHour = date.toLocaleTimeString("en-GB",options3);
+//     //unixHour = parseInt(unixHour);
+//     //unixHour = JSONparse(unixHour);
+//     //unixHour = number(unixHour);
+//     console.log(unixDay);   // Prints: Saturday
+//     console.log(unixDate);   // Prints: 6 May 2023
+//     console.log("unixHour: " + unixHour);
+//     //return unixHour;
+// }
 
 
     // Event listener for search-button
@@ -86,8 +86,6 @@ function unixConvert(unix) {
         var country = $("#search-input-country").val().trim().toUpperCase();
         console.log("search-input-country: " + country);
 
-
-
         // =========== localStorage: only the search query City/Country - display the City/Country =========== 
         // set max History
         // add clear History
@@ -96,12 +94,7 @@ function unixConvert(unix) {
         var name; //check case sensitive >>propercase & trim #search-input-city
         var country; //check case sensitive >>uppercase & trim #search-input-country
         // Build the query URL for the ajax request to the WeatherMap API
-        //var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=London,UK&appid=26355e49dde4c9bc9cc138c533cbc5f2";
         var APIkey = "26355e49dde4c9bc9cc138c533cbc5f2"
-        
-        //var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=London,UK&cnt=6&appid=" + APIkey + "&units=imperial";
-        //var queryURL = "https://api.openweathermap.org/data/2.5/forecast/daily?q=" + name + "," + country + "&cnt=6&appid=" + APIkey + "&units=imperial";
-        //var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + name + "," + country + "&cnt=6&appid=" + APIkey + "&units=imperial";
         var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + name + "," + country + "&appid=" + APIkey + "&units=imperial";
 
         
@@ -130,62 +123,72 @@ function unixConvert(unix) {
 
             var city = response.city.name;
             console.log("city: " + city);
-
+            $("#cardCity").text(city);
             // create weatherCards/button with a loop = 1 current + 5 future
-            var i = 0;
+            //var i = 0;
             //iterate over JSON Object ...return Current then select Noon results (3hr range) for 5 days
-            $(".card").each(function(){
-            console.log("i: " + i);
+            //$(".card").each(function(){ //CHANGE THIS !!!
+            for (var i = 0; i < response.list.length; i++) {
+              console.log("i: " + i);
+
+              var unix = response.list[i].dt;
+              console.log("unix: " + unix);
+              // unixConvert(unix); // returns unixDay/unixDate
+              //console.log(typeof unixHour);
+              //console.log(jQuery.type(unixHour));
+              var date = new Date(unix * 1000);
+              var unixHour = date.getHours();
+              var options1 = { weekday: 'long' };
+              var options2 = { year: 'numeric', month: 'long', day: 'numeric' };
+              var unixDay = date.toLocaleDateString("en-GB",options1);
+              var unixDate = date.toLocaleDateString("en-GB",options2);
+
+                    console.log(unixDay);   // Prints: Saturday
+                    console.log(unixDate);   // Prints: 6 May 2023
+
+                    console.log("UnixHour: " + unixHour) // returns "undefined"
+              unixHour = parseInt(unixHour);
+                    console.log("UnixHour: " + unixHour) // returns 
+                    console.log("*********************2**" + typeof unixHour);
+                    console.log("*********************2**" + jQuery.type(unixHour));
+
+              if (i == 0){ //}; //build Current weatherCard
+              if (unixHour >= 12 && unixHour <= 14){
+                
+                console.log("*****************midday unixHour ");
+              };
 
 
+              var icon = response.list[i].weather[0].icon;
+              icon = "https://openweathermap.org/img/wn/" + icon + "@2x.png";
+              console.log("icon : " + icon );
+              //console.log("https://openweathermap.org/img/wn/" + icon + "@2x.png");
+              // https://openweathermap.org/img/wn/10d@2x.png
+              // switch with Google icons
+              var description = response.list[i].weather[0].description;
+              console.log("description: " + description )
+              var temp = response.list[i].main.temp; // imperial: Fahrenheit (32°F − 32) × 5/9 = 0°C
+              temp = (temp-32)*(5/9);
+              temp = temp.toFixed();
+              console.log("temperature : " + temp + "°C"); 
+              var wind = response.list[i].wind.speed; // imperial: miles/hour
+              console.log("wind : " + wind + " miles/hour");
+              var humd = response.list[i].main.humidity; 
+              console.log("humidity : " + humd + "%"); // units %
+              i++;
 
-            //if (i == 0){};
+              // build weatherCard
+              $("#cardDay").text(unixDay);
+              $("#cardDate").text(unixDate);
+              //$("#cardIcon").prepend("<small>" + description + " </small>");
+              $("#cardIconImg").attr("src", icon);
+              $("#cardTemp").text("temperature: " + temp + "°C");
+              $("#cardWind").text("wind: " + wind + " mph");
+              $("#cardHumd").text("humidity: " + humd + "%");
+              
+            };
 
-            var unix = response.list[i].dt;
-            console.log("unix: " + unix);
-            // unixConvert(unix); // returns unixDay/unixDate
-            //console.log(typeof unixHour);
-            //console.log(jQuery.type(unixHour));
-            var date = new Date(unix * 1000);
-            var unixHour = date.getHours();
-            var options1 = { weekday: 'long' };
-            var options2 = { year: 'numeric', month: 'long', day: 'numeric' };
-            var unixDay = date.toLocaleDateString("en-GB",options1);
-            var unixDate = date.toLocaleDateString("en-GB",options2);
-
-            console.log(unixDay);   // Prints: Saturday
-            console.log(unixDate);   // Prints: 6 May 2023
-
-            console.log("UnixHour: " + unixHour) // returns "undefined"
-            unixHour = parseInt(unixHour);
-            console.log("UnixHour: " + unixHour) // returns 
-            console.log("*********************2**" + typeof unixHour);
-            console.log("*********************2**" + jQuery.type(unixHour));
-
-            if (unixHour >= 12 && unixHour <= 20){
-              console.log("*****************midday unixHour");
-            }
-
-
-
-
-            var icon = response.list[i].weather[0].icon;
-            console.log("icon : " + icon );
-            console.log("https://openweathermap.org/img/wn/" + icon + "@2x.png");
-            // https://openweathermap.org/img/wn/10d@2x.png
-            // switch with Google icons
-            var description = response.list[i].weather[0].description;
-            console.log("description: " + description )
-            var temp = response.list[i].main.temp; // imperial: Fahrenheit (32°F − 32) × 5/9 = 0°C
-            temp = (temp-32)*(5/9);
-            temp = temp.toFixed();
-            console.log("temperature : " + temp + "°C"); 
-            var wind = response.list[i].wind.speed; // imperial: miles/hour
-            console.log("wind : " + wind + " miles/hour");
-            var humd = response.list[i].main.humidity; 
-            console.log("humidity : " + humd + "%"); // units %
-            i++;
-           });
+           };
 
 
 

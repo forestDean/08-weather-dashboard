@@ -62,8 +62,10 @@ function unixConvert(unix) {
         console.log("search-input-country: " + country);
 
 
-// IF EMPTY 
+// if empty
 // return;
+// if no search match
+// return "undefined" != typeof r && r.event.triggered !== b.type ? r.event.dispatch.apply(a, arguments) : void 0
 
         // =========== localStorage: only the search query City/Country - display the City/Country =========== 
 
@@ -80,13 +82,34 @@ function unixConvert(unix) {
         // Perfoming an AJAX GET request to our queryURL
         $.ajax({
           url: queryURL,
-          method: "GET"
+          method: "GET",
+          // if empty or no search match
+          error: function() {
+            // something else went wrong
+            //alert('An unknown error occurred!');
+            console.log("search not found");
+            $('#searchalert').removeClass('d-none');
+            setTimeout(function() { 
+            $('#searchalert').addClass('d-none');
+            }, 3000);
+          }
+          // statusCode: {
+          //   404: function() {
+          //        // server says: page not found; let's redirect to 404 page
+          //        console.log("search not found");
+          //        //window.location.href = "http://example.com/my/404/page";
+          //   }
+          // }
+  
         })
   
         // After the data from the AJAX request comes back
           .then(function(response) {
             
             console.log("Hi");
+            if (response == "undefined") {
+              console.log("response undefined");
+            }
             console.log(response);
 
             // create weatherCards/button with a loop = 1 current + 5 future

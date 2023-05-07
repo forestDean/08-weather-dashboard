@@ -37,18 +37,43 @@ $(window).ready(function() { console.log("window ready"); //});
 // };
 //var unixDay;
 //var unixDate;
+var unixHour;
 function unixConvert(unix) {
+  // console.log(typeof unix);
+  // console.log(jQuery.type(unix));
+  //var unixNew = new Date(unix * 1000);
+  // console.log("unixNew: " + typeof unixNew);
+  // console.log("unixNew: " + jQuery.type(unixNew))
+  // console.log("unixNew: " + unixNew);
+  // var unixNewHours = unixNew.getHours();
+  // console.log("unixNewHours: " + unixNewHours);
+  // console.log(typeof unixNewHours);
+  // console.log(jQuery.type(unixNewHours));
+
     //var unixTimestamp = 1683396000;
     var date = new Date(unix * 1000);
     var options1 = { weekday: 'long' };
     var options2 = { year: 'numeric', month: 'long', day: 'numeric' };
+    //var options3 = { hour: 'numeric' };
 
     console.log(date);
     //console.log(Date.now());
     var unixDay = date.toLocaleDateString("en-GB",options1);
     var unixDate = date.toLocaleDateString("en-GB",options2);
+    var unixHour = date.getHours();
+    console.log("unixHour: " + unixHour);
+    console.log("*********************1**" + typeof unixHour);
+    console.log("*********************1**" + jQuery.type(unixHour));
+
+    //var unixHour = new Date(unix * 1000);
+    //var unixHour = date.toLocaleTimeString("en-GB",options3);
+    //unixHour = parseInt(unixHour);
+    //unixHour = JSONparse(unixHour);
+    //unixHour = number(unixHour);
     console.log(unixDay);   // Prints: Saturday
     console.log(unixDate);   // Prints: 6 May 2023
+    console.log("unixHour: " + unixHour);
+    //return unixHour;
 }
 
 
@@ -76,7 +101,8 @@ function unixConvert(unix) {
         
         //var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=London,UK&cnt=6&appid=" + APIkey + "&units=imperial";
         //var queryURL = "https://api.openweathermap.org/data/2.5/forecast/daily?q=" + name + "," + country + "&cnt=6&appid=" + APIkey + "&units=imperial";
-        var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + name + "," + country + "&cnt=6&appid=" + APIkey + "&units=imperial";
+        //var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + name + "," + country + "&cnt=6&appid=" + APIkey + "&units=imperial";
+        var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + name + "," + country + "&appid=" + APIkey + "&units=imperial";
 
         
 
@@ -100,9 +126,6 @@ function unixConvert(unix) {
           .then(function(response) {
             
             console.log("Hi");
-            if (response == "undefined") {
-              console.log("response undefined");
-            }
             console.log(response);
 
             var city = response.city.name;
@@ -110,11 +133,42 @@ function unixConvert(unix) {
 
             // create weatherCards/button with a loop = 1 current + 5 future
             var i = 0;
+            //iterate over JSON Object ...return Current then select Noon results (3hr range) for 5 days
             $(".card").each(function(){
             console.log("i: " + i);
+
+
+
+            //if (i == 0){};
+
             var unix = response.list[i].dt;
             console.log("unix: " + unix);
-            unixConvert(unix); // returns unixDay/unixDate
+            // unixConvert(unix); // returns unixDay/unixDate
+            //console.log(typeof unixHour);
+            //console.log(jQuery.type(unixHour));
+            var date = new Date(unix * 1000);
+            var unixHour = date.getHours();
+            var options1 = { weekday: 'long' };
+            var options2 = { year: 'numeric', month: 'long', day: 'numeric' };
+            var unixDay = date.toLocaleDateString("en-GB",options1);
+            var unixDate = date.toLocaleDateString("en-GB",options2);
+
+            console.log(unixDay);   // Prints: Saturday
+            console.log(unixDate);   // Prints: 6 May 2023
+
+            console.log("UnixHour: " + unixHour) // returns "undefined"
+            unixHour = parseInt(unixHour);
+            console.log("UnixHour: " + unixHour) // returns 
+            console.log("*********************2**" + typeof unixHour);
+            console.log("*********************2**" + jQuery.type(unixHour));
+
+            if (unixHour >= 12 && unixHour <= 20){
+              console.log("*****************midday unixHour");
+            }
+
+
+
+
             var icon = response.list[i].weather[0].icon;
             console.log("icon : " + icon );
             console.log("https://openweathermap.org/img/wn/" + icon + "@2x.png");

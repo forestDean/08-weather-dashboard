@@ -35,46 +35,6 @@ $(window).ready(function() { console.log("window ready"); //});
 //         reset();
 //     }
 // };
-//var unixDay;
-//var unixDate;
-// var unixHour;
-// function unixConvert(unix) {
-//   // console.log(typeof unix);
-//   // console.log(jQuery.type(unix));
-//   //var unixNew = new Date(unix * 1000);
-//   // console.log("unixNew: " + typeof unixNew);
-//   // console.log("unixNew: " + jQuery.type(unixNew))
-//   // console.log("unixNew: " + unixNew);
-//   // var unixNewHours = unixNew.getHours();
-//   // console.log("unixNewHours: " + unixNewHours);
-//   // console.log(typeof unixNewHours);
-//   // console.log(jQuery.type(unixNewHours));
-
-//     //var unixTimestamp = 1683396000;
-//     var date = new Date(unix * 1000);
-//     var options1 = { weekday: 'long' };
-//     var options2 = { year: 'numeric', month: 'long', day: 'numeric' };
-//     //var options3 = { hour: 'numeric' };
-
-//     console.log(date);
-//     //console.log(Date.now());
-//     var unixDay = date.toLocaleDateString("en-GB",options1);
-//     var unixDate = date.toLocaleDateString("en-GB",options2);
-//     var unixHour = date.getHours();
-//     console.log("unixHour: " + unixHour);
-//     console.log("*********************1**" + typeof unixHour);
-//     console.log("*********************1**" + jQuery.type(unixHour));
-
-//     //var unixHour = new Date(unix * 1000);
-//     //var unixHour = date.toLocaleTimeString("en-GB",options3);
-//     //unixHour = parseInt(unixHour);
-//     //unixHour = JSONparse(unixHour);
-//     //unixHour = number(unixHour);
-//     console.log(unixDay);   // Prints: Saturday
-//     console.log(unixDate);   // Prints: 6 May 2023
-//     console.log("unixHour: " + unixHour);
-//     //return unixHour;
-// }
 
 
     // Event listener for search-button
@@ -124,10 +84,14 @@ $(window).ready(function() { console.log("window ready"); //});
             var city = response.city.name;
             console.log("city: " + city);
             $("#cardCity").text(city);
+            $("#cardCity").append("<small> " + country + "</small>")
+            $("#cardCity").children().eq(0).addClass("countryID");
+
             // create weatherCards/button with a loop = 1 current + 5 future
             //var i = 0;
             //iterate over JSON Object ...return Current then select Noon results (3hr range) for 5 days
             //$(".card").each(function(){ //CHANGE THIS !!!
+            var k = 0;  
             for (var i = 0; i < response.list.length; i++) {
               console.log("i: " + i);
 
@@ -152,13 +116,13 @@ $(window).ready(function() { console.log("window ready"); //});
                     console.log("*********************2**" + typeof unixHour);
                     console.log("*********************2**" + jQuery.type(unixHour));
 
-              if (i == 0){ //}; //build Current weatherCard
-              if (unixHour >= 12 && unixHour <= 14){
-                
-                console.log("*****************midday unixHour ");
-              };
+              if (i == 0 || unixHour >= 12 && unixHour <= 14){ //}; //build Current weatherCard
+              //if (i == 0){ //}; //build Current weatherCard
+                if (unixHour >= 12 && unixHour <= 14){
+                  console.log("*********************************midday unixHour ");
+                };
 
-
+              //var k = 0;  
               var icon = response.list[i].weather[0].icon;
               icon = "https://openweathermap.org/img/wn/" + icon + "@2x.png";
               console.log("icon : " + icon );
@@ -175,17 +139,20 @@ $(window).ready(function() { console.log("window ready"); //});
               console.log("wind : " + wind + " miles/hour");
               var humd = response.list[i].main.humidity; 
               console.log("humidity : " + humd + "%"); // units %
-              i++;
+              
 
               // build weatherCard
-              $("#cardDay").text(unixDay);
-              $("#cardDate").text(unixDate);
+              //$('#top').children().eq(0).addClass('boxy');
+              $("#day0" + k).children().children().eq(1).text(unixDay);
+              $("#day0" + k).children().children().eq(2).text(unixDate);
               //$("#cardIcon").prepend("<small>" + description + " </small>");
-              $("#cardIconImg").attr("src", icon);
-              $("#cardTemp").text("temperature: " + temp + "°C");
-              $("#cardWind").text("wind: " + wind + " mph");
-              $("#cardHumd").text("humidity: " + humd + "%");
-              
+              $("#day0" + k).children().children().eq(3).children().attr("src", icon);
+              $("#day0" + k).children().children().eq(4).text("temperature: " + temp + "°C");
+              $("#day0" + k).children().children().eq(5).text("wind: " + wind + " mph");
+              $("#day0" + k).children().children().eq(6).text("humidity: " + humd + "%");
+
+              k++;
+              console.log("k : " + k);
             };
 
            };

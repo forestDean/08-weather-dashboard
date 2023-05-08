@@ -1,28 +1,9 @@
 $(window).ready(function() { 
   console.log("window ready"); 
-  //var searchHistory = JSON.parse(localStorage.getItem("search"));
+  var searchHistory = JSON.parse(localStorage.getItem("search"));
   //console.log("searchHistory.length: " + searchHistory.length );
-
+  searchList();
  
-
-    // build searchList from searchHistory
-    var searchHistory = JSON.parse(localStorage.getItem("search"));
-    if (searchHistory != null){
-      for (var i = 0; i < searchHistory.length; i++) {
-        console.log("localStorage: " + searchHistory[i].city);
-        console.log("localStorage: " + searchHistory[i].code);
-
-        var name = searchHistory[i].city;
-        var country = searchHistory[i].code;;
-        searchList(name, country);
-        if (i == searchHistory.length-1) {
-          cardBuild(name, country);
-        }
-      };
-    } else {
-    // default population: london, UK
-        cardBuild("london", "UK");
-    };
 
 
     // Event listener for search-button
@@ -61,8 +42,9 @@ $(window).ready(function() {
         //   // refresh
         //   location.reload();
         // }
-        location.reload();
+        //location.reload();
         //searchList(name, country);
+        searchList();
         //cardBuild(name, country);
 
       });
@@ -70,8 +52,27 @@ $(window).ready(function() {
 
       // Search History button builder
       function searchList(name, country) {
+            // build searchList from searchHistory
+          //var searchHistory = JSON.parse(localStorage.getItem("search"));
+          if (searchHistory != null){
+            for (var i = 0; i < searchHistory.length; i++) {
+              console.log("localStorage: " + searchHistory[i].city);
+              console.log("localStorage: " + searchHistory[i].code);
 
-        $("#list").prepend('<button class="btn btn-lg btn-block btn-outline-light titlecase historyButton" type="button" data-city=' + name + ' data-code=' + country + '>' + name + '</button>');
+              var name = searchHistory[i].city;
+              var country = searchHistory[i].code;;
+              // searchList(name, country);
+              $("#list").prepend('<button class="btn btn-lg btn-block btn-outline-light titlecase historyButton" type="button" data-city=' + name + ' data-code=' + country + '>' + name + '</button>');
+              if (i == searchHistory.length-1) {
+                cardBuild(name, country);
+              }
+            };
+          } else {
+          // default population: london, UK
+              cardBuild("london", "UK");
+          };
+
+       
 
       };
 
@@ -201,6 +202,13 @@ $(window).ready(function() {
 
       // Adding a click event listener to all elements with a class of .historyButton
       $(document).on("click", ".historyButton", displayWeather);
+
+      // Event listener for reset-button
+      $("#reset").on("click", function(event) {
+        //$("#search-button").on("click", function(event) {
+        localStorage.clear();
+        location.reload();
+      });
 
 
 }); // e/o onload

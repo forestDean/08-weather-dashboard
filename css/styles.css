@@ -81,6 +81,10 @@ aside{
   color: white;
 }
 
+#reset {
+  background-color:rgba(50, 104, 145, 1) !important;
+}
+
 /* for cities not in ProperCase */
 .titlecase 
 {

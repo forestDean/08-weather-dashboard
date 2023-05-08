@@ -27,6 +27,25 @@ form {
   /* border: 1px solid red; */
 }
 
+input[type="text"]:focus {
+  /* background-color: white !important; */
+  color: rgb(50, 104, 145) !important;
+  /* box-shadow: none;  */
+}
+
+input:-internal-autofill-selected {
+  background-color: white !important;
+  color: rgb(50, 104, 145) !important;
+  color: red !important;
+  /* box-shadow: none;  */
+}
+
+
+
+
+
+
+
 /* input {
   color:rgb(50, 104, 145);
 } */
@@ -72,7 +91,7 @@ aside{
 
 
 .card {
-  background-color:rgba(50, 104, 145)
+  background-color:rgba(50, 104, 145, 0.7)
 }
 
 #day00{

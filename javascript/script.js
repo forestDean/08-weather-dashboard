@@ -60,8 +60,20 @@ $(window).ready(function() {
         
       function searchList(name, country) {
 
-        $("#list").prepend('<button class="btn btn-lg btn-block btn-outline-light titlecase" id="search-button" type="button" data-city=' + name + ' data-code=' + country + '>' + name + '</button>');
+        $("#list").prepend('<button class="btn btn-lg btn-block btn-outline-light titlecase historyButton" type="button" data-city=' + name + ' data-code=' + country + '>' + name + '</button>');
 
+      };
+
+      // display the weather for a stored location
+      function displayWeather() {
+          console.log("****************************************displayWeather");
+          //name = $(".historyButton").attr("data-city");
+          name = $(this).attr("data-city");
+          //country = $(".historyButton").attr("data-code");
+          country = $(this).attr("data-code");
+          console.log("displayWeather: " + name);
+          console.log("displayWeather: " + country);
+          cardBuild(name, country);
       };
 
       function cardBuild(name, country){
@@ -179,5 +191,9 @@ $(window).ready(function() {
         });
     
       };  //e/o cardBuild
+
+// Adding a click event listener to all elements with a class of .historyButton
+$(document).on("click", ".historyButton", displayWeather);
+
 
 }); // e/o onload

@@ -76,59 +76,54 @@ $(window).ready(function() { console.log("window ready"); //});
         })
   
         // After the data from the AJAX request returns...
-          .then(function(response) {
-            
-            console.log("Hi");
-            console.log(response);
+        .then(function(response) {
+          
+          console.log("Hi");
+          console.log(response);
 
-            var city = response.city.name;
-            console.log("city: " + city);
-            $("#cardCity").text(city);
-            $("#cardCity").append("<small> " + country + "</small>")
-            $("#cardCity").children().eq(0).addClass("countryID");
+          var city = response.city.name;
+          console.log("city: " + city);
+          $("#cardCity").text(city);
+          $("#cardCity").append("<small> " + country + "</small>")
+          $("#cardCity").children().eq(0).addClass("countryID");
 
-            // create weatherCards/button with a loop = 1 current + 5 future
-            //var i = 0;
-            //iterate over JSON Object ...return Current then select Noon results (3hr range) for 5 days
-            //$(".card").each(function(){ //CHANGE THIS !!!
-            var k = 0;  
-            for (var i = 0; i < response.list.length; i++) {
-              console.log("i: " + i);
+          // create weatherCards/button with a loop = 1 current + 5 future
+          // iterate over JSON Object ...return Current then select midday results (3hr range) for 5 days
+          var k = 0;
+          var p = 0;  
+          for (var i = 0; i < response.list.length; i++) {
+            console.log("i: " + i);
 
-              var unix = response.list[i].dt;
-              console.log("unix: " + unix);
-              // unixConvert(unix); // returns unixDay/unixDate
-              //console.log(typeof unixHour);
-              //console.log(jQuery.type(unixHour));
-              var date = new Date(unix * 1000);
-              var unixHour = date.getHours();
-              var options1 = { weekday: 'long' };
-              var options2 = { year: 'numeric', month: 'long', day: 'numeric' };
-              var unixDay = date.toLocaleDateString("en-GB",options1);
-              var unixDate = date.toLocaleDateString("en-GB",options2);
+            var unix = response.list[i].dt;
+            console.log("unix: " + unix);
+            var date = new Date(unix * 1000);
+            var unixHour = date.getHours();
+            var options1 = { weekday: 'long' };
+            var options2 = { year: 'numeric', month: 'long', day: 'numeric' };
+            var unixDay = date.toLocaleDateString("en-GB",options1);
+            var unixDate = date.toLocaleDateString("en-GB",options2);
 
-                    console.log(unixDay);   // Prints: Saturday
-                    console.log(unixDate);   // Prints: 6 May 2023
+                  console.log(unixDay);   // Prints: Saturday
+                  console.log(unixDate);   // Prints: 6 May 2023
 
-                    console.log("UnixHour: " + unixHour) // returns "undefined"
-              unixHour = parseInt(unixHour);
-                    console.log("UnixHour: " + unixHour) // returns 
-                    console.log("*********************2**" + typeof unixHour);
-                    console.log("*********************2**" + jQuery.type(unixHour));
+                  console.log("UnixHour: " + unixHour)
+            unixHour = parseInt(unixHour);
+                  console.log("UnixHour: " + unixHour)
+                  console.log("*********************2**" + typeof unixHour);
+                  console.log("*********************2**" + jQuery.type(unixHour));
 
-              if (i == 0 || unixHour >= 12 && unixHour <= 14){ //}; //build Current weatherCard
-              //if (i == 0){ //}; //build Current weatherCard
-                if (unixHour >= 12 && unixHour <= 14){
-                  console.log("*********************************midday unixHour ");
-                };
+            if (i == 0 || unixHour >= 12 && unixHour <= 14){ 
+
+              if (unixHour >= 12 && unixHour <= 14){
+                console.log("*********************************midday unixHour ");
+              };
 
               //var k = 0;  
               var icon = response.list[i].weather[0].icon;
               icon = "https://openweathermap.org/img/wn/" + icon + "@2x.png";
               console.log("icon : " + icon );
-              //console.log("https://openweathermap.org/img/wn/" + icon + "@2x.png");
-              // https://openweathermap.org/img/wn/10d@2x.png
               // switch with Google icons
+
               var description = response.list[i].weather[0].description;
               console.log("description: " + description )
               var temp = response.list[i].main.temp; // imperial: Fahrenheit (32°F − 32) × 5/9 = 0°C
@@ -142,37 +137,38 @@ $(window).ready(function() { console.log("window ready"); //});
               
 
               // build weatherCard
-              //$('#top').children().eq(0).addClass('boxy');
-              $("#day0" + k).children().children().eq(1).text(unixDay);
-              $("#day0" + k).children().children().eq(2).text(unixDate);
-              //$("#cardIcon").prepend("<small>" + description + " </small>");
-              $("#day0" + k).children().children().eq(3).children().attr("src", icon);
-              $("#day0" + k).children().children().eq(4).text("temperature: " + temp + "°C");
-              $("#day0" + k).children().children().eq(5).text("wind: " + wind + " mph");
-              $("#day0" + k).children().children().eq(6).text("humidity: " + humd + "%");
+              $("#day0" + k).children().children().eq(1+p).text(unixDay);
+              $("#day0" + k).children().children().eq(2+p).text(unixDate);;
+              $("#day0" + k).children().children().eq(3+p).children().attr("src", icon);
+              $("#day0" + k).children().children().eq(4+p).text("temperature: " + temp + "°C");
+              $("#day0" + k).children().children().eq(5+p).text("wind: " + wind + " mph");
+              $("#day0" + k).children().children().eq(6+p).text("humidity: " + humd + "%");
+            
+              // adjust for City child only in Current weatherCard
+              if (k == 0) {
+                p--;
+              };
 
               k++;
               console.log("k : " + k);
+          };
+
+            // compensate for no midday returns on last day 
+            if (k == 5 && i == response.list.length-1 && unixHour < 12) {
+              console.log("LAST CARD: " + i);
+              $("#day0" + k).children().children().eq(1+p).text(unixDay);
+              $("#day0" + k).children().children().eq(2+p).text(unixDate);
+              $("#day0" + k).children().children().eq(3+p).children().attr("src", icon);
+              $("#day0" + k).children().children().eq(4+p).text("temperature: " + temp + "°C");
+              $("#day0" + k).children().children().eq(5+p).text("wind: " + wind + " mph");
+              $("#day0" + k).children().children().eq(6+p).text("humidity: " + humd + "%");
             };
 
-           };
 
 
-
-
-
-  
-        //     // Creating and storing an image tag
-        //     var catImage = $("<img>");
-  
-        //     // Setting the catImage src attribute to imageUrl
-        //     catImage.attr("src", imageUrl);
-        //     catImage.attr("alt", "cat image");
-  
-        //     // Prepending the catImage to the images div
-        //     $("#images").prepend(catImage);
-          });
-      });
+          };
+        });
+    });
 
 
 

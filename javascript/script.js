@@ -1,29 +1,30 @@
 $(window).ready(function() { 
   console.log("window ready"); 
-  // default population: london, UK
-  cardBuild("manchester", "UK");
+ 
 
-// build searchList from searchHistory
- var searchHistory = JSON.parse(localStorage.getItem("search"));
-// console.log("localStorage: " + searchHistory); // object
-if (searchHistory != null){
- for (var i = 0; i < searchHistory.length; i++) {
-  console.log("localStorage: " + searchHistory[i].city); //localStorage: bristol
-  console.log("localStorage: " + searchHistory[i].code);
-  var name = searchHistory[i].city;
-  var country = searchHistory[i].code;
-  searchList(name, country);
- };
-};
-
-
-
-
-
+    // build searchList from searchHistory
+    var searchHistory = JSON.parse(localStorage.getItem("search"));
+    // console.log("localStorage: " + searchHistory); // object
+    if (searchHistory != null){
+      for (var i = 0; i < searchHistory.length; i++) {
+        console.log("localStorage: " + searchHistory[i].city);
+        console.log("localStorage: " + searchHistory[i].code);
+        var name = searchHistory[i].city;
+        var country = searchHistory[i].code;
+        console.log(name);
+        console.log(country);
+        searchList(name, country);
+      if (i == searchHistory.length-1) {
+        console.log("CARDBUILD");
+        cardBuild(name, country);
+      }
 
 
-
-
+      };
+    } else {
+    // default population: london, UK
+        cardBuild("london", "UK");
+    };
 
 
 
@@ -36,18 +37,18 @@ if (searchHistory != null){
         console.log("search-input-city: " + name);
         var country = $("#search-input-country").val().trim().toUpperCase();
         console.log("search-input-country: " + country);
-        // =========== localStorage: only the search query City/Country - display the City/Country =========== 
-        // set max History or pop
-        // add clear History 
 
         var city = {
           city: name, 
           code: country
-        }
+        };
 
         if (searchHistory == null){
           searchHistory = [];
-        };
+        } else if (searchHistory.length > 7){
+        // remove first object - limit Searh History to 8 locations
+        searchHistory.shift();
+        }
         
         searchHistory.push(city);
         localStorage.setItem("search",JSON.stringify(searchHistory));
@@ -58,16 +59,8 @@ if (searchHistory != null){
       });
         
       function searchList(name, country) {
-        searchHistory = JSON.parse(localStorage.getItem("search"));
-        console.log("searchHistory: " + searchHistory);
 
-        $("#history").append("<button>");
-        $("#history").children().eq(1).addClass("btn btn-lg btn-block btn-outline-light titlecase");
-        $("#history").children().eq(1).attr("id","search-button");
-        $("#history").children().eq(1).attr("type","button");
-        $("#history").children().eq(1).attr("data-city", name);
-        $("#history").children().eq(1).attr("data-code", country);
-        $("#history").children().eq(1).text(name);
+        $("#list").prepend('<button class="btn btn-lg btn-block btn-outline-light titlecase" id="search-button" type="button" data-city=' + name + ' data-code=' + country + '>' + name + '</button>');
 
       };
 

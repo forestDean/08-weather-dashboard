@@ -1,25 +1,23 @@
 $(window).ready(function() { 
   console.log("window ready"); 
+  //var searchHistory = JSON.parse(localStorage.getItem("search"));
+  //console.log("searchHistory.length: " + searchHistory.length );
+
  
 
     // build searchList from searchHistory
     var searchHistory = JSON.parse(localStorage.getItem("search"));
-    // console.log("localStorage: " + searchHistory); // object
     if (searchHistory != null){
       for (var i = 0; i < searchHistory.length; i++) {
         console.log("localStorage: " + searchHistory[i].city);
         console.log("localStorage: " + searchHistory[i].code);
+
         var name = searchHistory[i].city;
-        var country = searchHistory[i].code;
-        console.log(name);
-        console.log(country);
+        var country = searchHistory[i].code;;
         searchList(name, country);
-      if (i == searchHistory.length-1) {
-        console.log("CARDBUILD");
-        cardBuild(name, country);
-      }
-
-
+        if (i == searchHistory.length-1) {
+          cardBuild(name, country);
+        }
       };
     } else {
     // default population: london, UK
@@ -27,8 +25,6 @@ $(window).ready(function() {
     };
 
 
-
-     //  var searchHistory = [];
     // Event listener for search-button
     $("#search-button").on("click", function(event) {
         event.preventDefault();
@@ -37,6 +33,12 @@ $(window).ready(function() {
         console.log("search-input-city: " + name);
         var country = $("#search-input-country").val().trim().toUpperCase();
         console.log("search-input-country: " + country);
+
+        // if empty Alert & return
+        if(name == "" ) {
+          alert();
+          return;
+        }
 
         var city = {
           city: name, 
@@ -48,36 +50,41 @@ $(window).ready(function() {
         } else if (searchHistory.length > 7){
         // remove first object - limit Searh History to 8 locations
         searchHistory.shift();
+        // refresh
         }
         
         searchHistory.push(city);
         localStorage.setItem("search",JSON.stringify(searchHistory));
-
-        searchList(name, country);
-        cardBuild(name, country);
+        // if (searchHistory.length > 8){
+        //   console.log("********************************OVERFLOW");
+        //   searchHistory.shift();
+        //   // refresh
+        //   location.reload();
+        // }
+        location.reload();
+        //searchList(name, country);
+        //cardBuild(name, country);
 
       });
         
+
+      // Search History button builder
       function searchList(name, country) {
 
         $("#list").prepend('<button class="btn btn-lg btn-block btn-outline-light titlecase historyButton" type="button" data-city=' + name + ' data-code=' + country + '>' + name + '</button>');
 
       };
 
+
       // display the weather for a stored location
       function displayWeather() {
-          console.log("****************************************displayWeather");
-          //name = $(".historyButton").attr("data-city");
           name = $(this).attr("data-city");
-          //country = $(".historyButton").attr("data-code");
           country = $(this).attr("data-code");
-          console.log("displayWeather: " + name);
-          console.log("displayWeather: " + country);
           cardBuild(name, country);
       };
 
-      function cardBuild(name, country){
 
+      function cardBuild(name, country){    
         // Build the query URL for the ajax request to the WeatherMap API
         var APIkey = "26355e49dde4c9bc9cc138c533cbc5f2"
         var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + name + "," + country + "&appid=" + APIkey + "&units=imperial";
@@ -88,13 +95,7 @@ $(window).ready(function() {
           method: "GET",
           // if empty or no search match
           error: function() {
-            // alert
-            console.log("search not found");
-            $('#searchalert').removeClass('d-none');
-            // delayed reset
-            setTimeout(function() { 
-            $('#searchalert').addClass('d-none');
-            }, 3000);
+            alert();
           }
         })
   
@@ -132,8 +133,6 @@ $(window).ready(function() {
                   console.log("UnixHour: " + unixHour)
             unixHour = parseInt(unixHour);
                   console.log("UnixHour: " + unixHour)
-                  // console.log("*********************2**" + typeof unixHour);
-                  // console.log("*********************2**" + jQuery.type(unixHour));
 
             if (i == 0 || unixHour >= 12 && unixHour <= 14){ 
 
@@ -141,7 +140,6 @@ $(window).ready(function() {
                 console.log("*********************************midday unixHour ");
               };
 
-              //var k = 0;  
               var icon = response.list[i].weather[0].icon;
               icon = "https://openweathermap.org/img/wn/" + icon + "@2x.png";
               console.log("icon : " + icon );
@@ -159,7 +157,6 @@ $(window).ready(function() {
               var humd = response.list[i].main.humidity; 
               console.log("humidity : " + humd + "%"); // units %
               
-
               // build weatherCard
               $("#day0" + k).children().children().eq(1+p).text(unixDay);
               $("#day0" + k).children().children().eq(2+p).text(unixDate);;
@@ -177,7 +174,7 @@ $(window).ready(function() {
               console.log("k : " + k);
             };
 
-            // compensate for no midday returns on last day 
+            // compensate if no midday returns on last day 
             if (k == 5 && i == response.list.length-1 && unixHour < 12) {
               console.log("LAST CARD: " + i);
               $("#day0" + k).children().children().eq(1+p).text(unixDay);
@@ -192,8 +189,18 @@ $(window).ready(function() {
     
       };  //e/o cardBuild
 
-// Adding a click event listener to all elements with a class of .historyButton
-$(document).on("click", ".historyButton", displayWeather);
+      function alert(){
+        // alert
+        console.log("search not found");
+        $('#searchalert').removeClass('d-none');
+        // delayed reset
+        setTimeout(function() { 
+        $('#searchalert').addClass('d-none');
+        }, 3000);
+      }
+
+      // Adding a click event listener to all elements with a class of .historyButton
+      $(document).on("click", ".historyButton", displayWeather);
 
 
 }); // e/o onload

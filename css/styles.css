@@ -71,6 +71,28 @@ aside{
 .weatherIcon {}
 
 
+.card {
+  background-color:rgba(50, 104, 145)
+}
+
+#day00{
+  background-color:white;
+}
+
+.countryID {
+  font-size: 12px;
+  color: rgba(50, 104, 145, 0.5);
+}
+
+#forecast {
+  color: white;
+}
+
+#forecast legend {
+  color:rgba(50, 104, 145)
+}
+
+
 
 
 

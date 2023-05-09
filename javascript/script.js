@@ -1,7 +1,6 @@
 $(window).ready(function() { 
-  console.log("window ready"); 
+  // console.log("window ready"); 
   var searchHistory = JSON.parse(localStorage.getItem("search"));
-  //console.log("searchHistory.length: " + searchHistory.length );
   searchList();
  
 
@@ -10,9 +9,9 @@ $(window).ready(function() {
         event.preventDefault();
 
         var name = $("#search-input-city").val().trim().toLowerCase();
-        console.log("search-input-city: " + name);
+        // console.log("search-input-city: " + name);
         var country = $("#search-input-country").val().trim().toUpperCase();
-        console.log("search-input-country: " + country);
+        // console.log("search-input-country: " + country);
 
         // if empty Alert & return
         if(name == "" ) {
@@ -44,8 +43,8 @@ $(window).ready(function() {
           // build searchList from searchHistory
           if (searchHistory != null){
             for (var i = 0; i < searchHistory.length; i++) {
-              console.log("localStorage: " + searchHistory[i].city);
-              console.log("localStorage: " + searchHistory[i].code);
+              // console.log("localStorage: " + searchHistory[i].city);
+              // console.log("localStorage: " + searchHistory[i].code);
 
               var name = searchHistory[i].city;
               var country = searchHistory[i].code;;
@@ -101,12 +100,10 @@ $(window).ready(function() {
         // After the data from the AJAX request returns...
         .then(function(response) {
           
-          console.log("Hi");
-          console.log(response);
+          // console.log(response);
 
           var city = response.city.name;
-          console.log("city: " + city);
-          $("#cardCity").text(city);
+          console.log("city: " + city);          $("#cardCity").text(city);
           $("#cardCity").append("<small> " + country + "</small>")
           $("#cardCity").children().eq(0).addClass("countryID");
 
@@ -115,13 +112,12 @@ $(window).ready(function() {
           var k = 0;
           var p = 0;  
           for (var i = 0; i < response.list.length; i++) {
-            console.log("i: " + i);
+            // console.log("i: " + i);
 
             var unix = response.list[i].dt;
-            console.log("unix: " + unix);
             // adjust to timezone
             unix = unix + response.city.timezone;
-            console.log("unixTZ: " + unix);
+            // console.log("unixTZ: " + unix);
             var date = new Date(unix * 1000);
             var unixHour = date.getHours();
             var options1 = { weekday: 'long' };
@@ -141,18 +137,18 @@ $(window).ready(function() {
 
               var icon = response.list[i].weather[0].icon;
               icon = "https://openweathermap.org/img/wn/" + icon + "@2x.png";
-              console.log("icon : " + icon );
+              // console.log("icon : " + icon );
               var description = response.list[i].weather[0].description;
-              console.log("description: " + description )
+              // console.log("description: " + description )
               var temp = response.list[i].main.temp; // imperial: Fahrenheit (32°F − 32) × 5/9 = 0°C
               temp = (temp-32)*(5/9);
               temp = temp.toFixed();
-              console.log("temp : " + temp + "°C"); 
+             // console.log("temp : " + temp + "°C"); 
               var wind = response.list[i].wind.speed; // imperial: miles/hour
               wind = wind.toFixed();
-              console.log("wind : " + wind + " miles/hour");
+              // console.log("wind : " + wind + " miles/hour");
               var humd = response.list[i].main.humidity; 
-              console.log("humidity : " + humd + "%"); // units %
+              // console.log("humidity : " + humd + "%"); // units %
               
               // build weatherCard
               $("#day0" + k).children().children().eq(1+p).text(unixDay);
@@ -173,7 +169,6 @@ $(window).ready(function() {
 
             // compensate if no midday returns on last day 
             if (k == 5 && i == response.list.length-1 && unixHour < 12) {
-              console.log("LAST CARD: " + i);
               $("#day0" + k).children().children().eq(1+p).text(unixDay);
               $("#day0" + k).children().children().eq(2+p).text(unixDate);
               $("#day0" + k).children().children().eq(3+p).children().attr("src", icon);
@@ -188,7 +183,6 @@ $(window).ready(function() {
 
       function alert(){
         // alert
-        console.log("search not found");
         $('#searchalert').removeClass('d-none');
         // delayed reset
         setTimeout(function() { 

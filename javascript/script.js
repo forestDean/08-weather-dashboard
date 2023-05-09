@@ -26,9 +26,11 @@ $(window).ready(function() {
           code: country
         };
 
+        //console.log("searchHistory.length: " + searchHistory.length);
+        // bugFix
         if (searchHistory == null){
           searchHistory = [];
-        } else if (searchHistory.length > 7){
+        } else if (searchHistory.length > 6){
         // remove first object - limit Searh History to 8 locations
         searchHistory.shift();
         // refresh
@@ -52,8 +54,10 @@ $(window).ready(function() {
 
       // Search History button builder
       function searchList(name, country) {
-            // build searchList from searchHistory
-          //var searchHistory = JSON.parse(localStorage.getItem("search"));
+          // clear searchList
+          $('#list').empty();
+
+          // build searchList from searchHistory
           if (searchHistory != null){
             for (var i = 0; i < searchHistory.length; i++) {
               console.log("localStorage: " + searchHistory[i].city);
@@ -197,7 +201,7 @@ $(window).ready(function() {
         // delayed reset
         setTimeout(function() { 
         $('#searchalert').addClass('d-none');
-        }, 3000);
+        }, 2000);
       }
 
       // Adding a click event listener to all elements with a class of .historyButton

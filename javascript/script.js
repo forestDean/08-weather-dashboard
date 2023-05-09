@@ -5,7 +5,6 @@ $(window).ready(function() {
   searchList();
  
 
-
     // Event listener for search-button
     $("#search-button").on("click", function(event) {
         event.preventDefault();
@@ -26,28 +25,13 @@ $(window).ready(function() {
           code: country
         };
 
-        //console.log("searchHistory.length: " + searchHistory.length);
         // bugFix
         if (searchHistory == null){
           searchHistory = [];
-        } else if (searchHistory.length > 6){
-        // remove first object - limit Searh History to 8 locations
-        searchHistory.shift();
-        // refresh
-        }
-        
+        }    
         searchHistory.push(city);
         localStorage.setItem("search",JSON.stringify(searchHistory));
-        // if (searchHistory.length > 8){
-        //   console.log("********************************OVERFLOW");
-        //   searchHistory.shift();
-        //   // refresh
-        //   location.reload();
-        // }
-        //location.reload();
-        //searchList(name, country);
         searchList();
-        //cardBuild(name, country);
 
       });
         
@@ -65,8 +49,18 @@ $(window).ready(function() {
 
               var name = searchHistory[i].city;
               var country = searchHistory[i].code;;
-              // searchList(name, country);
-              $("#list").prepend('<button class="btn btn-lg btn-block btn-outline-light titlecase historyButton" type="button" data-city=' + name + ' data-code=' + country + '>' + name + '</button>');
+              var a = $("<button>");
+              // Adding the classes
+              a.addClass("btn btn-lg btn-block btn-outline-light titlecase historyButton");
+              // Adding a data-attribute with a value of the city
+              a.attr("data-city", name);
+              // Adding a data-attribute with a value of the country code
+              a.attr("data-code", country);
+              // Adding the button's text with a value of the city
+              a.text(name);
+              // Adding the button to the HTML
+              $("#list").prepend(a);
+
               if (i == searchHistory.length-1) {
                 cardBuild(name, country);
               }
@@ -75,8 +69,6 @@ $(window).ready(function() {
           // default population: london, UK
               cardBuild("london", "UK");
           };
-
-       
 
       };
 
@@ -98,9 +90,11 @@ $(window).ready(function() {
         $.ajax({
           url: queryURL,
           method: "GET",
-          // if empty or no search match
+          // if no search match
           error: function() {
+            searchHistory.pop();
             alert();
+            searchList();
           }
         })
   
@@ -125,31 +119,29 @@ $(window).ready(function() {
 
             var unix = response.list[i].dt;
             console.log("unix: " + unix);
+            // adjust to timezone
+            unix = unix + response.city.timezone;
+            console.log("unixTZ: " + unix);
             var date = new Date(unix * 1000);
             var unixHour = date.getHours();
             var options1 = { weekday: 'long' };
             var options2 = { year: 'numeric', month: 'long', day: 'numeric' };
             var unixDay = date.toLocaleDateString("en-GB",options1);
             var unixDate = date.toLocaleDateString("en-GB",options2);
-
-                  console.log(unixDay);   // Prints: Saturday
-                  console.log(unixDate);   // Prints: 6 May 2023
-
-                  console.log("UnixHour: " + unixHour)
+                  //console.log(unixDay);   // Prints: Saturday
+                  //console.log(unixDate);   // Prints: 6 May 2023
             unixHour = parseInt(unixHour);
-                  console.log("UnixHour: " + unixHour)
+                  //console.log("UnixHour: " + unixHour)
 
             if (i == 0 || unixHour >= 12 && unixHour <= 14){ 
 
-              if (unixHour >= 12 && unixHour <= 14){
-                console.log("*********************************midday unixHour ");
-              };
+              // if (unixHour >= 12 && unixHour <= 14){
+              //   console.log("*********************************midday unixHour ");
+              // };
 
               var icon = response.list[i].weather[0].icon;
               icon = "https://openweathermap.org/img/wn/" + icon + "@2x.png";
               console.log("icon : " + icon );
-              // switch with Google icons
-
               var description = response.list[i].weather[0].description;
               console.log("description: " + description )
               var temp = response.list[i].main.temp; // imperial: Fahrenheit (32°F − 32) × 5/9 = 0°C

@@ -6,7 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="shortcut icon" type="image/x-icon" href="./images/favicon.ico"/>
   <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-  <!-- <link rel="stylesheet" href="styles/reset.css" /> -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
@@ -51,7 +50,7 @@
         <div class="list-group" id="history">
           <legend class="mt-4 h6">Search History:</legend>
           <div id="list"><!-- search history buttons render here --></div>
-          <button class="btn btn-lg btn-block btn-outline-light titlecase mt-4" type="button" id="reset">reset</button>
+          <button class="btn btn-lg btn-block btn-outline-light titlecase mt-5 mt-md-4" type="button" id="reset">reset</button>
         </div>
       </aside>
 
@@ -59,27 +58,24 @@
         <section id="today" class="row mt-3" role="region" aria-live="polite">
 
           <!-- weatherCard00 -->
-          <article id="day00" class="card col ml-2">
+          <article id="day00" class="card col-sm-12 pl-sm-5 pl-md-2 ml-2">
             <div class="card-body">
               <div id="cardCity" class="h2"></div>
               <div id="cardDay" class=""></div>
               <div id="cardDate" class=""></div>
-              <!-- <div id="cardIcon" class=""><span class="material-symbols-outlined" style="color: #698ece;">cloudy</span></div> -->
               <div id="cardIcon" class=""><img id="cardIconImg" src="" class="weatherIcon" alt="weather icon"></div>
               <div id="cardTemp" class=""></div>
               <div id="cardWind" class=""></div>
               <div id="cardHumd" class=""></div>
             </div>     
           </article>
-          <!-- <i class="fa-solid fa-cloud" style="color: #698ece;"></i> -->
-          <!-- <span class="material-symbols-outlined" style="color: #698ece;">cloudy</span> -->
 
         </section>
         <section id="forecast" class="row mt-3" role="region" aria-live="polite">
           <legend class="mt-4 ml-3 h6">5-Day Forecast:</legend>
 
           <!-- weatherCard01 -->
-          <article id="day01" class="card col ml-2">
+          <article id="day01" class="card col-sm-12 col-md pl-sm-5 pl-md-2 ml-2">
             <div class="card-body px-1">
               <div id="cardDay" class=""></div>
               <div id="cardDate" class=""></div>
@@ -91,7 +87,7 @@
           </article>
 
           <!-- weatherCard02 -->
-          <article id="day02" class="card col ml-2">
+          <article id="day02" class="card col-sm-12 col-md mt-3 mt-md-0 pl-sm-5 pl-md-2 ml-2">
             <div class="card-body px-1">
               <div id="cardDay" class=""></div>
               <div id="cardDate" class=""></div>
@@ -103,7 +99,7 @@
           </article>
 
           <!-- weatherCard03 -->
-          <article id="day03" class="card col ml-2">
+          <article id="day03" class="card col-sm-12 col-md mt-3 mt-md-0 pl-sm-5 pl-md-2 ml-2">
             <div class="card-body px-1">
               <div id="cardDay" class=""></div>
               <div id="cardDate" class=""></div>
@@ -115,7 +111,7 @@
           </article>
 
           <!-- weatherCard04 -->
-          <article id="day04" class="card col ml-2">
+          <article id="day04" class="card col-sm-12 col-md mt-3 mt-md-0 pl-sm-5 pl-md-2 ml-2">
             <div class="card-body px-1">
               <div id="cardDay" class=""></div>
               <div id="cardDate" class=""></div>
@@ -127,7 +123,7 @@
           </article>
 
           <!-- weatherCard05 -->
-          <article id="day05" class="card col ml-2">
+          <article id="day05" class="card col-sm-12 col-md mt-3 mt-md-0 pl-sm-5 pl-md-2 ml-2">
             <div class="card-body px-1">
               <div id="cardDay" class=""></div>
               <div id="cardDate" class=""></div>

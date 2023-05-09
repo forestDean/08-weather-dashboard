@@ -13,9 +13,8 @@ body {
 }
 
 .container-fluid {
-  /* width: 800px; */
   margin-top: 20px;
-  border: 1px solid red;
+  margin-bottom: 40px;
 } 
 
 .weather-header {
@@ -44,36 +43,8 @@ input.form-control:-internal-autofill-selected {
   color: fieldtext !important; */
 }
 
-
-
-
-
-
-
-
-/* input {
-  color:rgb(50, 104, 145);
-} */
-
 .btn{
-  /* border: 1px solid gray; */
-}
-
-/* Google Icons */
-.material-symbols-outlined {
-  font-variation-settings:
-  'FILL' 0,
-  'wght' 400,
-  'GRAD' 0,
-  'opsz' 48
-}
-
-hr {
-  background-color: green;
-}
-
-aside{
-  border: 1px solid green;
+  height:80px;
 }
 
 #search-button {
@@ -98,7 +69,6 @@ aside{
 
 .weatherIcon {}
 
-
 .card {
   background-color:rgba(50, 104, 145, 0.7)
 }
@@ -122,24 +92,6 @@ aside{
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
  /* ================= RESPONSIVE MEDIA QUERIES ================= */
 
 /* Extra small devices (portrait phones, less than 576px)
@@ -152,12 +104,16 @@ No media query since this is the default in Bootstrap */
 
 /* Medium devices (tablets, 768px and up) */
 @media (min-width: 768px) { 
-
+  .btn{
+    height:55px;
+  }
 }
 
 /* Large devices (desktops, 992px and up) */
 @media (min-width: 992px) {
-
+  .btn{
+    height:45px;
+  }
 } 
 
 /* Extra large devices (large desktops, 1200px and up) */
